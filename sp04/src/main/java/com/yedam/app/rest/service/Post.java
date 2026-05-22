@@ -36,7 +36,7 @@ public class Post {
 			this.body = body;
 			return this;
 		}
-		public Post bulid() {
+		public Post build() {
 			return new Post(userId , id ,title ,body);
 		}
 	}

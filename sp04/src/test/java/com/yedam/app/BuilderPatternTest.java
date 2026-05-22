@@ -9,7 +9,7 @@ import com.yedam.app.rest.service.Post;
 public class BuilderPatternTest {
 	@Test
 	void first() {
-		Post post = new Post.Builder().userId(1).title("First Post").body("Hello").bulid();
+		Post post = new Post.Builder().userId(1).title("First Post").body("Hello").build();
 		
 		System.out.println(post);
 	}
