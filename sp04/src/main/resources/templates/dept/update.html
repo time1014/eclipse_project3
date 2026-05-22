@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8">
+<title>부서 정보 수정</title>
+<th:block th:replace="~{common/config/default_config::BootstrapConfig}"></th:block>
+</head>
+<body>
+	<div class="container text-center">
+		<h3>부서 상세 조회</h3>
+		<form name="updateDForm" th:object="${dept}">
+			<div>
+				<div>
+					<label>부서 번호</label> <input id="did" type="text"
+						th:field="*{departmentId}" readonly>
+				</div>
+				<div>
+					<label>부서 이름</label> <input id="did" type="text"
+						th:field="*{departmentName}">
+				</div>
+				<div>
+					<label>상사 번호</label> <input id="did" type="text"
+						th:field="*{managerId}">
+				</div>
+				<div>
+					<label>지역 번호</label> <input id="did" type="text"
+						th:field="*{locationId}">
+				</div>
+				<div>
+					<button type="button" class="btn btn-primary">수정</button>
+				</div>
+			</div>
+		</form>
+	</div>
+		<script>
+        updateDForm.querySelector("button").addEventListener("click",updateDept);
+
+        async function updateDept(e){
+            let dataObj = getDeptObj();
+            let resData = await fetch(`deptUpdate`,{
+                method : "post",
+                headers : {"Content-type" : "application/json"},
+                body : JSON.stringify(dataObj)
+            })
+            .then(res=>res.json())
+            .catch(err=>console.log(err))
+
+            if(resData.result){
+                alert(`부서번호 ${resData.target.departmentId}의 정보가 수정되었습니다`);
+            }
+        }
+
+        function getDeptObj(){
+            let formData = new FormData(updateDForm);
+            let formObj = {};
+            formData.forEach((value,index)=>{
+                formObj[index] = value;
+            });
+            return formObj;
+        }
+        
+    </script>
+
+</body>
+</html>

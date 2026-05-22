@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:fragment="DefaultHeader"> <!-- html div로 바꿔도 상관없음 페이지 자체가 아니라 그냥 딴곳에 들어갈 부분이라서 -->
+	<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" th:href="@{/empList}">전체 조회</a> <!-- 절대 경로시 문제 생김 -->
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" th:href="@{/empInsert}">사원 등록</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+  </li>
+</ul>
+</html>

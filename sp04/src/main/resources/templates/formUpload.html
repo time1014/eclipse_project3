@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8">
+<title>Form 방식</title>
+</head>
+<body>
+	<form th:action="@{/uploadForm}" method="post" enctype="multipart/form-data">
+		<input type="file" name = "file">
+		<button type="submit">저장</button>
+	</form>
+	<form name="uploadForm">
+		<input type="file" name = "uploads" multiple>
+		<button type="button">다중업로드</button>
+	</form>
+	<script>
+		uploadForm.querySelector('button').addEventListener("click",async function(e){
+			// 서버에 전송할 데이터
+			let formData = new FormData(uploadForm);
+
+			//해당 데이터를 서버에 전송
+			await fetch(`uploadAjax`,{
+				method:"post",
+				body: formData
+			})
+			.then(res=>res.json())
+			.then(result => {
+				console.log(result)
+			})
+			.catch(err=>console.log(err))
+		})
+	</script>
+</body>
+</html>

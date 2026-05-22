@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th ="https://www.thymeleaf.org " 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{common/layouts/default_layout}" 
+	layout:fragment="Content">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<th:block th:replace="~{common/config/default_config::BootstrapConfig}"></th:block>
+</head>
+<body>
+	<div class =" container text-center">
+		<h3>사원 수정</h3>
+		<form name="updateForm" th:object="${emp}"> <!-- 필드 쓰려면 이거 반드시 필요 -->
+		<div>
+			<div>
+				<label for="eid">사원번호</label>
+				<input id="eid" type="text" th:field = " *{employeeId}" th:value="*{employeeId}" readonly> <!-- field  name이랑 결과 같음 오타 화면 깨짐 방지로 이거 권장 -->
+			</div>
+			<div>
+				<label for="eid">이름</label>
+				<input id="ename" type="text" th:field="*{lastName}" th:value="${emp.lastName}" >
+			</div>
+			<div>
+				<label for="eid">이메일</label>
+				<input id="email" type="email" th:field="*{email}" th:value="${emp.email}" >
+			</div>
+			<div>
+				<label for="eid">입사일</label>
+				<input id="hdate" type="date" th:field="*{hireDate}" >
+			</div>
+			<div>
+				<label for="eid">업무</label>
+				<input id="job" type="text"  th:field="*{jobId}" th:value="${emp.jobId}">
+			</div>
+			<div>
+				<label for="eid">급여</label>
+				<input id="sal" type="number" th:field="*{salary}" step="0.01" th:value="${emp.salary}">
+			</div>
+			
+			
+			<div>
+				<button type="button" class="btn btn-primary">수정</button>
+				
+			</div>
+		</div>
+		</form>
+		<script>
+			updateForm.querySelector('button').addEventListener("click",updateAjax);
+
+			async function updateAjax(e){
+				// 전송 데이터 가져옴
+				let dataObj = getEmpObj();
+				let  resData = await fetch(`empUpdate`,{
+					method:"post",
+					headers: {"Content-type" : "application/json"},
+					body:JSON.stringify(dataObj)
+				})
+				.then(res => res.json())
+				.catch(err=>console.log(err))
+
+				console.log(resData);
+				if(resData.result){
+					alert(`${resData.target.employeeId} 사원정보가 수정되었습니다`)
+				}
+			}
+			function getEmpObj(){
+					let formData = new FormData(updateForm);
+
+					let formObj={}
+					formData.forEach((value,name)=>{
+						// console.log(value,name);
+						formObj[name] = value;
+					})
+					return formObj;
+				}
+		</script>
+	</div>
+</body>
+</html>

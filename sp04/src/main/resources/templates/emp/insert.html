@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th ="https://www.thymeleaf.org " 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{common/layouts/default_layout}" 
+	layout:fragment="Content">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<th:block th:replace="~{common/config/default_config::BootstrapConfig}"></th:block>
+
+</head>
+<body>
+	<div class =" container text-center">
+		<h3>사원 등록</h3>
+		<!-- @{} 링크 표현식 경로 생성 -->
+		<form name= "insertForm" th:action="@{/empInsert}" method="post">
+			<div>
+				<label for="ename">이름</label>
+				<input id="ename" type="text" name = "lastName">
+			</div>
+			<div>
+				<label for="email">이메일</label>
+				<input id="email" type="email" name = "email">
+			</div>
+			<div>
+				<label for="hdate">입사일</label>
+				<input id="hdate" type="date" name = "hireDate">
+			</div>
+			<div>
+				<label for="job">업무</label>
+				<input id="job" type="text" name = "jobId">
+			</div>
+			<div>
+				<label for="sal">급여</label>
+				<input id="sal" type="number" name = "salary">
+			</div>
+			
+			
+			<div>
+				<button type="reset" class="btn btn-primary">초기화</button>
+				<button type="submit" class="btn btn-warning">등록</button>
+			</div>
+		</form>
+	</div>
+	<script>
+		document.querySelector('form[name="insertForm"]').addEventListener('submit',(e)=>{
+			e.preventDefault();
+
+			const formTag = e.currentTarget;
+			let nameTag = formTag.querySelector('[name="lastName"]');
+			if(nameTag.value == ''){
+				alert('이름이 입력되지 않았습니다')
+				nameTag.focus();
+				return;
+			}
+			let hdateTag = document.querySelector('form [name="hireDate"]');
+			if(hdateTag.value==''){
+				alert('입사일자가 입력되지 않았습니다');
+				hdateTag.focus();
+				return;
+			}
+			alert("정상적으로 등록되었습니다");
+			formTag.submit();
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th = "https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>타임리프</h1>
+	<ul>
+		<th:block th:each="num : ${#numbers.sequence(1,10)}">
+			<li>[[${num}]]</li>
+		<th:block/>
+	</ul>
+	<!--/*
+		# 타임리프 내장 객체 $ 불러온 변수
+		1. controller에서 model객체에 페이지에서 사용할 데이터를 담음
+		=> thymeleaf에서 사용할 변수
+		2. thymeleaf에선 ${}을 이용해서 해당 데이터를 사용
+		3. th:속성="${}" 방식을 기본사용
+	*/-->
+	<h2>특정 사원정보</h2>
+	<div>
+		<p th:text="${info.employeeId}"></p>
+		<label>
+		[[${info.lastName}]],<input th:value="${info.firstName}">
+		</label>	
+	</div>
+	<th:block th:each=" emp , stats : ${list}"> <!-- emp 현재 반복 정보 , stats 반복상태정보 -->
+		<ul th:if="${stats.count <= 10}">
+			<li>[[${stats.count}]]</li>
+			<li name = "사원번호">[[${emp.employeeId}]]</li>
+			<li name = "사원이름">[[${emp.lastName}]]</li>
+			<li name = "입사일">[[${#dates.format(emp.hireDate,'yyyy년 MM월 dd일')}]]</li>
+		</ul>
+	</th:block>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th ="https://www.thymeleaf.org " 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{common/layouts/default_layout}" >
+<head>
+<meta charset="UTF-8">
+<title>부서 정보 전체 리스트</title>
+<th:block th:replace="~{common/config/default_config::BootstrapConfig}"></th:block>
+</head>
+<body>
+	<div class="container text-center">
+		<h3>부서 정보 전체 리스트</h3>
+		<table class="table border">
+			<thead>
+				<tr>
+					<th>인덱스 번호</th>
+					<th>부서 번호</th>
+					<th>부서 이름</th>
+					<th>상사 번호</th>
+					<th>지역 번호</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<th:block th:each="info , stats : ${depts}">
+				<tr th:onclick="|location.href='@{/deptInfo(departmentId=${info.departmentId})}'|">
+					<td>[[${stats.count}]]</td>
+					<td>[[${info.departmentId}]]</td>
+					<td>[[${info.departmentName}]]</td>
+					<td>[[${info.managerId}]]</td>
+					<td>[[${info.locationId}]]</td>
+				</tr>
+				</th:block>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8">
+<title>부서 정보 등록</title>
+<th:block th:replace="~{common/config/default_config::BootstrapConfig}"></th:block>
+</head>
+<body>
+	<div class="container text-center">
+		<h3>부서 정보 등록</h3>
+		<form name="insertDForm" th:action="@{/deptInsert}" method="post">
+			<div>
+				<label>부서 이름</label> <input type="text" name="departmentName">
+			</div>
+			<div>
+				<label>상사 번호</label> <input type="text" name="managerId">
+			</div>
+			<div>
+				<label>지역 번호</label> <input type="text" name="locationId">
+			</div>
+			<div>
+				<button type="reset" class="btn btn-warning">초기화</button>
+				<button type="submit" class="btn btn-primary">등록</button>
+			</div>
+		</form>
+	</div>
+	<script>
+		document.querySelector("form[name='insertDForm']").addEventListener("submit",(e)=>{
+			e.preventDefault();
+            const formTag = e.currentTarget;
+            let dNameTag = formTag.querySelector("[name='departmentName']");
+            if(dNameTag.value == ''){
+                alert("부서 이름이 입력되지 않았습니다")
+                dNameTag.focus();
+                return;
+            }
+            let mIdTag = formTag.querySelector("[name = 'managerId']");
+            if(mIdTag.value == ''){
+                alert("상사 번호가 입력되지 않았습니다");
+                mIdTag.focus();
+                return;
+            }
+            let lId = formTag.querySelector("[name='locationId']");
+            if(lId.value == ''){
+                alert("지역 번호가 입력되지 않았습니다");
+                lId.focus();
+                return;
+            }
+            alert("부서 정보가 등록되었습니다");
+            formTag.submit();
+        });
+	</script>
+</body>
+</html>

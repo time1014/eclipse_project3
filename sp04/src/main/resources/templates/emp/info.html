@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th ="https://www.thymeleaf.org " 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{common/layouts/default_layout}" 
+	layout:fragment="Content">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- bootstrap => fragment -->
+<!-- ~{파일의 경로 :: fragment 이름} -->
+<th:block th:replace="~{common/config/default_config::BootstrapConfig}"></th:block>
+</head>
+<body>
+	<div class =" container text-center">
+		<h3>사원 상세 조회</h3>
+		<div>
+			<div>
+				<label for="eid">사원번호</label>
+				<input id="eid" type="text" th:value="${emp.employeeId}" readonly>
+			</div>
+			<div>
+				<label for="eid">이름</label>
+				<input id="ename" type="text" th:value="${emp.lastName}" readonly>
+			</div>
+			<div>
+				<label for="eid">이메일</label>
+				<input id="email" type="email" th:value="${emp.email}" readonly>
+			</div>
+			<div>
+				<label for="eid">입사일</label>
+				<input id="hdate" type="date" th:value="${#dates.format(emp.hireDate,'yyyy-MM-dd')}" readonly>
+			</div>
+			<div>
+				<label for="eid">업무</label>
+				<input id="job" type="text" th:value="${emp.jobId}" readonly>
+			</div>
+			<div>
+				<label for="eid">급여</label>
+				<input id="sal" type="number" step="0.01" th:value="${emp.salary}" readonly>
+			</div>
+			
+			
+			<div>
+				<button type="button" class="btn btn-primary" th:onclick= "|location.href = '@{/empUpdate(employeeId=${emp.employeeId})}'|">수정</button>
+				<button type="button" class="btn btn-warning" th:onclick="|location.href = '@{/empList}'|">목록</button>
+				<button type="button" class="btn btn-danger" th:onclick = "|location.href = '@{/empDelete(empId=${emp.employeeId})}'|">삭제</button> <!-- ||사이에 써서 문자열로 넘김 + ()로 ${} 변수 작동하게 할수 있음 -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>
