@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : 자신이 연결되는 interface 이름 -->
+<mapper namespace="com.yedam.app.security.mapper.UserMapper">
+	<resultMap id="userInfo" type="UserVO">
+		<id property="loginId" column="login_id"></id>
+		<result property="password" column="password"></result>
+		<collection property="roleList" ofType="String">
+			<result column="role_name"></result>
+		</collection>
+	</resultMap>
+	<select id="getUserinfo" parameterType = "String" resultMap="userInfo">
+		SELECT login_id
+				,password
+				,role_name
+		FROM t_user tu 
+			JOIN t_user_role tur ON tu.id = tur.user_id
+			JOIN t_role tr ON tur.role_id = tr.id
+		WHERE login_id = ${id}
+	</select>
+</mapper>
