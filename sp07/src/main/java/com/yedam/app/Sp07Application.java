@@ -3,15 +3,13 @@ package com.yedam.app;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @MapperScan(basePackages = "com.yedam.app.**.mapper")
 @SpringBootApplication
-public class Sp06Application {
+public class Sp07Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Sp06Application.class, args);
-		
+		SpringApplication.run(Sp07Application.class, args);
 	}
 
 }

@@ -1,21 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org/">
+<html xmlns:th="https://www.thymeleaf.org/"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 <title>Insert title here</title>
 </head>
 <body>
 	<h1>메인 페이지입니다</h1>
 	<ul>
-		<li>
-			<a th:href="@{/user}">일반 사용자용 페이지로</a>
-		</li>
-				<li>
-			<a th:href="@{/admin}">관리자 전용 페이지로</a>
-		</li>
+		<li><a th:href="@{/user}">일반 사용자용 페이지로</a></li>
+		<li sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin}">관리자
+				전용 페이지로</a></li>
 	</ul>
-	<form th:action="@{/logout}" method="post">
-		<button type="submit">로그아웃</button>
-	</form>
+	<th:block sec:authorize="isAuthenticated()">
+		<p sec:authentication="name"></p>
+		<p sec:authentication="principal.username"></p>
+		<p sec:authentication="principal.authorities"></p>
+
+		<form th:action="@{/logout}" method="post">
+			<button type="submit">로그아웃</button>
+		</form>
+	</th:block>
+	<script>
+	
+		const csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
+		const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+		let headers = new Headers();
+		headers.append(csrfHeader, csrfToken);
+		//fetch , URLSearchParams
+		fetch(`info`,{
+			method : "post",
+			headers,
+			body : new URLSearchParams({ keyword : "Hello"})
+		})
+		.then(res => res.text())
+		.then(result => console.log(result))
+		.catch(err=>console.log(err));
+	</script>
+
 </body>
 </html>

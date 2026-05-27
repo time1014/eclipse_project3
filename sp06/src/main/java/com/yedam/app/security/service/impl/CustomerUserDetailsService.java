@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.yedam.app.security.mapper.UserMapper;
+import com.yedam.app.security.service.LoginVO;
 import com.yedam.app.security.web.UserVO;
 
 import lombok.RequiredArgsConstructor;
@@ -20,10 +21,12 @@ public class CustomerUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		UserVO userVO = userMapper.getUserInfo(username);
+		
+		System.out.println(userVO);
 		if(userVO == null) {
 			throw new UsernameNotFoundException(username);
 		}
-		return null;
+		return new LoginVO(userVO);
 	}
 
 }

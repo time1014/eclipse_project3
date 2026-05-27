@@ -9,13 +9,13 @@
 			<result column="role_name"></result>
 		</collection>
 	</resultMap>
-	<select id="getUserinfo" parameterType = "String" resultMap="userInfo">
+	<select id="getUserInfo" parameterType = "String" resultMap="userInfo">
 		SELECT login_id
 				,password
 				,role_name
 		FROM t_user tu 
 			JOIN t_user_role tur ON tu.id = tur.user_id
 			JOIN t_role tr ON tur.role_id = tr.id
-		WHERE login_id = ${id}
+		WHERE login_id = #{id}
 	</select>
 </mapper>
